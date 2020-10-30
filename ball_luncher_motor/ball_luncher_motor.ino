@@ -15,24 +15,28 @@ int cnt = 0; // 공을 던진 횟수
 
 void m_front()
 {
+  Serial.println("motor front");
   digitalWrite(L_motor, HIGH);
   digitalWrite(R_motor, HIGH);
   delay(100);
 }
 void m_right()
 {
+  Serial.println("motor right");
   digitalWrite(L_motor, LOW);
   digitalWrite(R_motor, HIGH);
   delay(50);
 }
 void m_left()
 {
+  Serial.println("motor left");
   digitalWrite(L_motor, LOW);
   digitalWrite(R_motor, HIGH);
   delay(50);
 }
 void m_stop()
 {
+  Serial.println("motor stop");
   digitalWrite(L_motor, LOW);
   digitalWrite(R_motor, LOW);
 }
@@ -103,7 +107,7 @@ void loop()
 
     if (distance > 182.8 + value && ir_value == 1) // 전방에 위치, 멀리 있을때
     {
-      while (read_distance() < 182.8 + value) m_front(); // 72인치 + value 이내일 때까지 전진
+      while (read_distance() > 182.8 + value) m_front(); // 72인치 + value 이내일 때까지 전진
       m_stop();
       shoot(); // 공 발사
     }
@@ -121,18 +125,19 @@ void loop()
     Serial.print("cnt : ");
     Serial.print(cnt);
     Serial.print(", ir : ");
-    Serial.print(ir); // ir, 거리 값 Serial 출력
+    Serial.print(ir_value); // ir, 거리 값 Serial 출력
     Serial.print(", distance : ");
     Serial.println(distance);
   }
   while (1) // pvc 파이프위에 공까지 모터 돌리기
   {
+    Serial.println("pvc");
     float distance = read_distance(); // 거리 읽어오기
     int ir_value = digitalRead(ir); // ir 센서 값 읽어오기
 
     if (distance > 182.8 && ir_value == 1) // 전방에 위치, 멀리 있을때
     {
-      while (read_distance() < 182.8) m_front(); // 72인치 이내일 때까지 전진
+      while (read_distance() > 182.8) m_front(); // 72인치 이내일 때까지 전진
       m_stop();
       pvc_shoot();
       break;
@@ -148,6 +153,7 @@ void loop()
       m_stop();
     }
   }
+  Serial.println("finish");
   digitalWrite(LED, HIGH); // 솔레노이드 작동
   delay(1000);
   return; // 작업이 끝나면 종료
