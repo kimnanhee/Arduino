@@ -129,10 +129,12 @@ void loop() {
 
   //토양습도 값에 따른 워터펌프 켜기
   if (soilmoisture_per < 30) {
+    Serial.println("waterpump on");
     digitalWrite(waterpumpPin, LOW);
     delay(5000);
   }
   else {
+    Serial.println("waterpump off");
     digitalWrite(waterpumpPin, HIGH);
   }
   
