@@ -101,10 +101,10 @@ void loop() {
 
   //조도센서 값에 따른 생장 LED 켜기
   if (cdsValue < 400) {
-    digitalWrite(waterpumpPin, LOW);
+    digitalWrite(relayPin, LOW);
   }
   else if (cdsValue >= 400) {
-    digitalWrite(waterpumpPin, HIGH);
+    digitalWrite(relayPin, HIGH);
   }
 
   //토양습도 값에 따른 LCD에 이모티콘 띄우기
@@ -129,11 +129,11 @@ void loop() {
 
   //토양습도 값에 따른 워터펌프 켜기
   if (soilmoisture_per < 30) {
-    digitalWrite(relayPin, HIGH);
+    digitalWrite(waterpumpPin, LOW);
     delay(5000);
   }
   else {
-    digitalWrite(relayPin, LOW);
+    digitalWrite(waterpumpPin, HIGH);
   }
   
   Serial.print(cdsValue);
